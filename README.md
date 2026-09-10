@@ -211,7 +211,7 @@ FaceAttend/
 ### 2. 克隆仓库
 
 ```bash
-git clone https://github.com/your-username/FaceAttend.git
+git clone https://github.com/zhao-the-illuminator/FaceAttend.git
 cd FaceAttend
 ```
 
@@ -392,7 +392,7 @@ face_euler_model_path     = ./wyw2smodels/euler_angle-resnet_18_imgsize_256.pth
 ### 为什么要做质量过滤？
 
 - 偏转过大的人脸会引入**特征漂移**，导致识别准确率下降
-- 过滤后系统识别准确率显著提升，误识率下降（基于实测数据）
+- 过滤后进入识别链路的样本质量更高，可减少无效计算与误匹配风险
 - 滤掉的低质量样本不会进入识别链路，**降低无效计算**
 
 ### 为什么用仿射变换对齐？
@@ -420,37 +420,37 @@ feat_final = F.normalize(feat_final, p=2, dim=-1)
 
 ---
 
-## 📊 性能基准
+## 📊 性能说明
 
-> 以下数据基于开发机实测（仅供参考，实际表现取决于硬件与场景）
+> ⚠️ 本仓库**未包含基准测试数据**。整条流水线包含 4 个串行推理模型（检测 → 多任务 → 姿态 → 识别），实际 FPS 强依赖硬件、输入分辨率与画面中的人脸数量，请以**本机实测**为准。建议自测方式：
 
-| 配置 | FPS | 单帧延迟 | 适用场景 |
-|---|---|---|---|
-| CPU（i7-12700H） | ~12 FPS | ~80 ms | 门禁考勤（单路） |
-| GPU（RTX 3060） | ~45 FPS | ~22 ms | 多路并发 |
-| GPU（RTX 4090） | ~80+ FPS | ~12 ms | 工业级部署 |
+```bash
+cd dpcas
+python main.py     # 终端会持续打印每帧处理耗时
+```
 
-**识别精度**（基于内部测试集，**仅供参考**）：
+**影响性能的主要因素**
 
-| 测试场景 | 准确率 | 误识率 |
-|---|---|---|
-| 正面自然光 | ≥ 98% | < 0.5% |
-| 侧脸（\|yaw\|<30°） | ≥ 95% | < 1% |
-| 弱光 / 逆光 | 80~90% | 1~3% |
-| 戴口罩 | 不支持（需补口罩适配） | — |
+| 因素 | 影响 |
+|---|---|
+| `detect_input_size` | 640 → 416 时，检测输入像素量降至约 42%（面积比） |
+| 画面人脸数量 | 多任务 / 姿态 / 识别按人脸逐张推理，人脸越多耗时越长 |
+| 质量过滤命中率 | 未通过过滤的人脸可跳过对齐与识别，减少无效计算 |
+| 计算设备 | 代码内 `use_cuda` 参数可切换 CPU / GPU，GPU 有数倍加速 |
+| 触发策略 | 与识别区 IoU ≤ 0.8 的人脸不做识别，规避边缘无效计算 |
 
 ---
 
 ## 🎯 Roadmap
 
-- [ ] **支持口罩人脸识别**（疫情等场景刚需）
+- [ ] **支持口罩人脸识别**（遮挡场景刚需）
 - [ ] **支持活体检测**（防照片 / 视频攻击）
 - [ ] **Docker 一键部署**（Web 后端 + REST API）
-- [ ] **Web 管理后台**（Vue3 + Element Plus，参考 3D 服装平台经验）
+- [ ] **Web 管理后台**（员工信息管理、底库维护）
 - [ ] **多线程 / 多路摄像头并发**
 - [ ] **模型量化（INT8 / TensorRT）加速**
+- [ ] **考勤业务层**：打卡记录落库、重复打卡去重、统计报表导出
 - [ ] **接入企业微信 / 钉钉打卡 API**
-- [ ] **数据可视化看板**（日 / 周 / 月考勤报表）
 
 ---
 
@@ -469,7 +469,7 @@ A：InsightFace 团队提出的 ArcFace 损失函数是该项目的核心贡献�
 A：单路门禁考勤场景可以。多路（>4 路）并发建议 GPU 部署 + TensorRT 加速。
 
 **Q5：如何添加新员工？**  
-A：将员工照片放入对应文件夹，重跑 `make_facebank.py` 即可，**支持热更新**（无需重启服务）。
+A：把该员工的照片按「一人一个子文件夹」放入图片目录，重跑 `make_facebank.py` 重新生成底库，再重启程序加载新底库即可。
 
 ---
 
@@ -490,25 +490,12 @@ A：将员工照片放入对应文件夹，重跑 `make_facebank.py` 即可，**
 - [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5) — 人脸检测基线
 - [InsightFace](https://github.com/deepinsight/insightface) — 人脸识别 Backbone
 - [ArcFace: Additive Angular Margin Loss](https://arxiv.org/abs/1801.07698) — 损失函数设计
-- [THUCNews](http://thuctc.thunlp.org/) — 中文新闻分类数据集（本项目相关）
 
 ---
 
 ## 📄 License
 
 本项目基于 **MIT License** 开源 — 详见 [LICENSE](LICENSE) 文件。
-
-```
-MIT License
-
-Copyright (c) 2026 [Your Name]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software...
-```
 
 ---
 
@@ -518,9 +505,9 @@ copies of the Software...
 |---|---|
 | 作者 | 赵昱焜 |
 | 邮箱 | 1787435040@qq.com |
-| 电话 | 13709040559 |
-| GitHub | [@your-username](https://github.com/your-username) |
-| 博客 | [掘金 / CSDN / 知乎]（待补充） |
+| GitHub | [@zhao-the-illuminator](https://github.com/zhao-the-illuminator) |
+
+> 简历 / 项目合作请优先通过邮箱联系。
 
 ---
 
