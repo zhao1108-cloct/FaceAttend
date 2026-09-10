@@ -1,0 +1,103 @@
+# ============================================================
+#  FaceAttend — Git 忽略规则
+# ============================================================
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ---------- 虚拟环境 ----------
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ---------- IDE / 编辑器 ----------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.iml
+
+# ---------- 操作系统 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ---------- 模型权重（体积大，统一通过 Releases 分发）----------
+*.pth
+*.pt
+*.onnx
+*.caffemodel
+*.weights
+*.h5
+*.tflite
+*.pb
+*.engine
+*.trt
+
+# 例外：身份底库文件很小（约 23KB），保留以便快速体验
+!dpcas/wyw2smodels/facebank/facebank.pth
+
+# ---------- 训练 / 推理产物 ----------
+runs/
+save/
+model_exp/
+checkpoints/
+ckpt/
+weights/
+logs/
+output/
+outputs/
+result_aug/
+*.log
+nohup.out
+*.npy
+*.npz
+*.pkl
+
+# 例外：底库标签文件
+!dpcas/wyw2smodels/facebank/names.npy
+
+# ---------- 音视频 ----------
+*.mp4
+*.MP4
+*.avi
+*.mov
+*.mkv
+
+# ---------- 数据集 / 压缩包 ----------
+datasets/
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# ---------- 临时文件 ----------
+*.bak
+*.tmp
+*~

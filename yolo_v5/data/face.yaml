@@ -1,0 +1,11 @@
+# 人脸检测数据信息配置
+# 数据存放路径的配置
+# path: /home/02-data/yolo_widerface_open_train/anno  # 根目录
+path: /Users/mac/Documents/02.计算机视觉/03.人脸支付/02.code/datasets/yolo_widerface_open_train/anno  # 根目录
+train: images  # 训练集数据的目录（根目录的相对路经）
+val: images  # 验证集数据的目录（根目录的相对路经），在这里验证集和训练集是同一个
+test:  # 测试集，可选
+
+# 数据集的类型信息：在这里我们只检测人脸这一种类型的目标
+nc: 1  # 类别个数
+names: ['face']  # 类别名称
