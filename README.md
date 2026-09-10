@@ -211,7 +211,7 @@ FaceAttend/
 ### 2. 克隆仓库
 
 ```bash
-git clone https://github.com/zhao-the-illuminator/FaceAttend.git
+git clone https://github.com/zhao1108-cloct/FaceAttend.git
 cd FaceAttend
 ```
 
@@ -247,7 +247,19 @@ pip install -r requirements.txt
 | `facebank/facebank.pth` | 人脸底库特征矩阵（512 维 × N） |
 | `facebank/names.npy` | 底库身份标签 |
 
-> 权重文件体积较大（单个 40MB ~ 470MB），因此 **未纳入 Git 版本管理**，请从 Releases 页面下载或自行训练后放入该目录。底库请使用 `make_facebank` 工具基于自己的照片生成。
+> 权重文件体积较大（单个 40MB ~ 470MB），因此 **未纳入 Git 版本管理**。请从 [Releases 页面](https://github.com/zhao1108-cloct/FaceAttend/releases/latest) 下载后放入该目录；底库请使用 `make_facebank` 工具基于自己的照片生成。
+
+<details>
+<summary>📥 权重下载（点击展开）</summary>
+
+| 文件 | 下载链接 |
+|---|---|
+| `face_yoloV5_640.pt` | [Releases](https://github.com/zhao1108-cloct/FaceAttend/releases/latest/download/face_yoloV5_640.pt) |
+| `face_multitask-resnet_34_imgsize-256-20210423.pth` | [Releases](https://github.com/zhao1108-cloct/FaceAttend/releases/latest/download/face_multitask-resnet_34_imgsize-256-20210423.pth) |
+| `euler_angle-resnet_18_imgsize_256.pth` | [Releases](https://github.com/zhao1108-cloct/FaceAttend/releases/latest/download/euler_angle-resnet_18_imgsize_256.pth) |
+| `face_verify-model_ir_se-50.pth` | [Releases](https://github.com/zhao1108-cloct/FaceAttend/releases/latest/download/face_verify-model_ir_se-50.pth) |
+
+</details>
 
 ### 5. 构建人脸底库
 
@@ -505,7 +517,7 @@ A：把该员工的照片按「一人一个子文件夹」放入图片目录，�
 |---|---|
 | 作者 | 赵昱焜 |
 | 邮箱 | 1787435040@qq.com |
-| GitHub | [@zhao-the-illuminator](https://github.com/zhao-the-illuminator) |
+| GitHub | [@zhao1108-cloct](https://github.com/zhao1108-cloct) |
 
 > 简历 / 项目合作请优先通过邮箱联系。
 
