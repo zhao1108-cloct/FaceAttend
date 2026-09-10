@@ -1,0 +1,15 @@
+cfg_model=yolo
+classes=1
+gpus = 0
+num_workers = 0
+batch_size = 8
+img_size = 416
+multi_scale = True
+epochs = 1
+train=/Users/yaoxiaoying/Desktop/人脸支付/02.code/datasets/yolo_widerface_open_train/anno/train.txt
+valid=/Users/yaoxiaoying/Desktop/人脸支付/02.code/datasets/yolo_widerface_open_train/anno/train.txt
+names=./cfg/face.names
+finetune_model = /Users/yaoxiaoying/Desktop/人脸支付/02.code/facetoPay/yolo_v3/face-pretrain/latest_416.pt
+lr_step = 10,20,30
+lr0 = 0.0001
+root_path = /Users/yaoxiaoying/Desktop/人脸支付/02.code/datasets
